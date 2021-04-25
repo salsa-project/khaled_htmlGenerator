@@ -2,6 +2,8 @@ let action_select = document.getElementsByTagName('select')[0];
 let type_select = document.getElementsByTagName('select')[1];
 let container = document.getElementById('inputs_container');
 
+
+
 let all_tags = {
   wilaya: '<label for="">Wilaya</label><input id="wilaya" type="text" placeholder="wilaya: annaba"/>',
   
@@ -27,36 +29,106 @@ let all_tags = {
   Spécifications: '<label for="">Spécifications</label><input id="Spécifications" type="text" placeholder="ex: Jardin , Electricité , Gaz , Eau , Garage , Acte notarié , Livret foncier"/>'
 }
 
+
+
 let action_spec={
+  touts: ['wilaya', 
+          'one_commune', 
+          'multi_commune', 
+          'étages', 'chambers', 
+          'min_chambers', 'max_chambers', 
+          'prix', 
+          'min_prix', 'max_prix', 
+          'facade', 'Superficie', 'Spécifications'],
   acheter:{
-    common: ['wilaya', 'multi_commune'],
-    maison: ['étages', 'min_chambers', 'max_chambers', 'min_prix', 'max_prix', 'facade', 'Superficie', 'Spécifications'],
-    terrin_maison: ['min_prix', 'max_prix', 'facade', 'Superficie', 'Spécifications'],
-    terrin_agriculture: ['min_prix', 'max_prix', 'Superficie', 'Spécifications']
+    Appartement: ['one_commune', 'étages', 'chambers', 'prix'],
+    Terrain: ['one_commune', 'étages', 'chambers', 'prix', 
+              'min_chambers', 'max_chambers', 'min_prix', 'max_prix'],
+    Villa: ['one_commune', 'chambers', 'prix'],
+    Local: ['one_commune', 'chambers', 'prix'],
+    Carcasse: ['one_commune', 'chambers', 'prix'],
+    Niveau_De_Villa: ['one_commune', 'chambers', 'prix'],
+    Terrain_Agricole: ['one_commune', 'chambers', 'prix'],
+    Duplex: ['one_commune', 'chambers', 'prix'],
+    Immeuble: ['one_commune', 'chambers', 'prix'],
+    Studio: ['one_commune', 'chambers', 'prix'],
+    Hangar: ['one_commune', 'chambers', 'prix'],
+    Usine: ['one_commune', 'chambers', 'prix'],
+    Bungalow: ['one_commune', 'chambers', 'prix']
   },
   vender:{
-    common: ['wilaya', 'one_commune'],
-    maison: ['étages', 'chambers', 'prix', 'facade', 'Superficie', 'Spécifications'],
-    terrin_maison: ['prix', 'facade', 'Superficie', 'Spécifications'],
-    terrin_agriculture: ['prix', 'Superficie', 'Spécifications']
+    Appartement: ['one_commune', 'étages', 'chambers', 'prix'],
+    Terrain: ['one_commune', 'étages', 'chambers', 'prix', 
+              'min_chambers', 'max_chambers', 'min_prix', 'max_prix'],
+    Villa: ['one_commune', 'chambers', 'prix'],
+    Local: ['one_commune', 'chambers', 'prix'],
+    Carcasse: ['one_commune', 'chambers', 'prix'],
+    Niveau_De_Villa: ['one_commune', 'chambers', 'prix'],
+    Terrain_Agricole: ['one_commune', 'chambers', 'prix'],
+    Duplex: ['one_commune', 'chambers', 'prix'],
+    Immeuble: ['one_commune', 'chambers', 'prix'],
+    Studio: ['one_commune', 'chambers', 'prix'],
+    Hangar: ['one_commune', 'chambers', 'prix'],
+    Usine: ['one_commune', 'chambers', 'prix'],
+    Bungalow: ['one_commune', 'chambers', 'prix']
   },
   client_louer:{
-    common: ['wilaya', 'multi_commune'],
-    maison: ['min_chambers', 'max_chambers', 'min_prix', 'max_prix', 'facade', 'Superficie', 'Spécifications'],
-    terrin_maison: ['min_prix', 'max_prix', 'facade', 'Superficie', 'Spécifications'],
-    terrin_agriculture: ['min_prix', 'max_prix', 'Superficie', 'Spécifications']
+    Appartement: ['one_commune', 'étages', 'chambers', 'prix'],
+    Terrain: ['one_commune', 'étages', 'chambers', 'prix', 
+              'min_chambers', 'max_chambers', 'min_prix', 'max_prix'],
+    Villa: ['one_commune', 'chambers', 'prix'],
+    Local: ['one_commune', 'chambers', 'prix'],
+    Carcasse: ['one_commune', 'chambers', 'prix'],
+    Niveau_De_Villa: ['one_commune', 'chambers', 'prix'],
+    Terrain_Agricole: ['one_commune', 'chambers', 'prix'],
+    Duplex: ['one_commune', 'chambers', 'prix'],
+    Immeuble: ['one_commune', 'chambers', 'prix'],
+    Studio: ['one_commune', 'chambers', 'prix'],
+    Hangar: ['one_commune', 'chambers', 'prix'],
+    Usine: ['one_commune', 'chambers', 'prix'],
+    Bungalow: ['one_commune', 'chambers', 'prix']
+  },
+  louer_vacance:{
+    Appartement: ['one_commune', 'étages', 'chambers', 'prix'],
+    Terrain: ['one_commune', 'étages', 'chambers', 'prix', 
+              'min_chambers', 'max_chambers', 'min_prix', 'max_prix'],
+    Villa: ['one_commune', 'chambers', 'prix'],
+    Local: ['one_commune', 'chambers', 'prix'],
+    Carcasse: ['one_commune', 'chambers', 'prix'],
+    Niveau_De_Villa: ['one_commune', 'chambers', 'prix'],
+    Terrain_Agricole: ['one_commune', 'chambers', 'prix'],
+    Duplex: ['one_commune', 'chambers', 'prix'],
+    Immeuble: ['one_commune', 'chambers', 'prix'],
+    Studio: ['one_commune', 'chambers', 'prix'],
+    Hangar: ['one_commune', 'chambers', 'prix'],
+    Usine: ['one_commune', 'chambers', 'prix'],
+    Bungalow: ['one_commune', 'chambers', 'prix']
   },
   vendeur_louer:{
-    common: ['wilaya', 'one_commune'],
-    maison: ['min_chambers', 'max_chambers', 'min_prix', 'max_prix', 'facade', 'Superficie', 'Spécifications'],
-    terrin_maison: ['min_prix', 'max_prix', 'facade', 'Superficie', 'Spécifications'],
-    terrin_agriculture: ['min_prix', 'max_prix', 'Superficie', 'Spécifications']
+    Appartement: ['one_commune', 'étages', 'chambers', 'prix'],
+    Terrain: ['one_commune', 'étages', 'chambers', 'prix', 
+              'min_chambers', 'max_chambers', 'min_prix', 'max_prix'],
+    Villa: ['one_commune', 'chambers', 'prix'],
+    Local: ['one_commune', 'chambers', 'prix'],
+    Carcasse: ['one_commune', 'chambers', 'prix'],
+    Niveau_De_Villa: ['one_commune', 'chambers', 'prix'],
+    Terrain_Agricole: ['one_commune', 'chambers', 'prix'],
+    Duplex: ['one_commune', 'chambers', 'prix'],
+    Immeuble: ['one_commune', 'chambers', 'prix'],
+    Studio: ['one_commune', 'chambers', 'prix'],
+    Hangar: ['one_commune', 'chambers', 'prix'],
+    Usine: ['one_commune', 'chambers', 'prix'],
+    Bungalow: ['one_commune', 'chambers', 'prix']
+  },
+  échange:{
+    Appartement: ['one_commune', 'étages', 'chambers', 'prix'],
+    Studio: ['one_commune', 'chambers', 'prix'],
+    Villa: ['one_commune', 'chambers', 'prix'],
+    Niveau_De_Villa: ['one_commune', 'chambers', 'prix'],
+    Bungalow: ['one_commune', 'chambers', 'prix'],
+    Duplex: ['one_commune', 'chambers', 'prix'],
   }
 }
-
-
-
-
 
 
 
@@ -67,7 +139,8 @@ let all_specs = [];
 //Select Action
 action_select.addEventListener('click', function(){
   selected_action = (this.value == 'select') ? 'select': this.value;
-  fillArray()
+  htmlOptionsGenerator(this.value)
+  container.innerHTML = ''
 })
 //Select Type
 type_select.addEventListener('click', function(){
@@ -75,16 +148,31 @@ type_select.addEventListener('click', function(){
   fillArray()
 })
 
+
+function htmlOptionsGenerator(action){
+  let actionTypes = {
+    common: ['Appartement','Terrain','Villa','Local','Carcasse','Niveau_De_Villa','Terrain_Agricole','Duplex','Immeuble','Studio','Hangar','Usine','Bungalow'],
+    échange:['Appartement','Studio','Villa','Niveau_De_Villa','Bungalow','Duplex']
+  }
+  let uniqueActions = ['échange'];
+  let options = (uniqueActions.indexOf(action) > -1) ? actionTypes[action] : actionTypes.common;
+  let result = options.map(item=>{
+    return `<option value="${item}">${item}</option>`
+  })
+  // Render HTML (options)
+  document.getElementById('type').innerHTML = '<option value="select">--Choisez Un Option!--</option>'+result;
+}
+
+
 function fillArray(){
   //generate ARRAY only if (action) and (type) are selected
   if(selected_action == 'select' || selected_type == 'select') return;
-  all_specs = [];
-  all_specs = all_specs.concat(action_spec[selected_action]['common'], action_spec[selected_action][selected_type])
-  //Render HTML
-  container.innerHTML = htmlGenerator(all_specs)
+  all_specs = action_spec.touts.filter(item=> !action_spec[selected_action][selected_type].includes(item))
+  // Render HTML
+  container.innerHTML = htmlInputsGenerator(all_specs)
 }
 
-function htmlGenerator(arr){
+function htmlInputsGenerator(arr){
   let result = '';
       arr.map(item => {
      result+= all_tags[item];
