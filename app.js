@@ -146,12 +146,14 @@ let action_spec={
 
 //Select Action
 action_select.addEventListener('click', function(){
+  console.log(this.value);
   selected_action = (this.value == 'select') ? 'select': this.value;
   htmlOptionsGenerator(this.value)
   container.innerHTML = ''
 })
 //Select Type
 type_select.addEventListener('click', function(){
+  console.log(this.value);
   selected_type = (this.value == 'select') ? 'select': this.value;
   fillArray()
 })
