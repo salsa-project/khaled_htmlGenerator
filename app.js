@@ -145,17 +145,17 @@ let action_spec={
 
 
 //Select Action
-action_select.addEventListener('click', function(){
-  console.log(this.value);
+action_select.addEventListener('change', function(){
   selected_action = (this.value == 'select') ? 'select': this.value;
   htmlOptionsGenerator(this.value)
   container.innerHTML = ''
+  console.log(this.value);
 })
 //Select Type
-type_select.addEventListener('click', function(){
-  console.log(this.value);
+type_select.addEventListener('change', function(){
   selected_type = (this.value == 'select') ? 'select': this.value;
   fillArray()
+  console.log(this.value);
 })
 
 
