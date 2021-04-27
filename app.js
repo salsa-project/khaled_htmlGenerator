@@ -149,13 +149,11 @@ action_select.addEventListener('change', function(){
   selected_action = (this.value == 'select') ? 'select': this.value;
   htmlOptionsGenerator(this.value)
   container.innerHTML = ''
-  console.log(this.value);
 })
 //Select Type
 type_select.addEventListener('change', function(){
   selected_type = (this.value == 'select') ? 'select': this.value;
   fillArray()
-  console.log(this.value);
 })
 
 
