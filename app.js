@@ -1,6 +1,7 @@
 let action_select = document.getElementsByTagName('select')[0];
 let type_select = document.getElementsByTagName('select')[1];
 let container = document.getElementById('inputs_container');
+let saveBtn = document.getElementById('saveInputs');
 
 let selected_action = 'select';
 let selected_type = 'select';
@@ -73,38 +74,35 @@ communes[48]="Ain Rahma|Ain Tarek|Ammi Moussa|Belassel Bouzegza|Bendaoud|Beni De
 
 
 let all_tags = {
-  wilaya: '<select id="wilaya_select" name ="wilaya_select"  onchange="htmlCommunesGenerator(this.value)"><option value="select">--Choisez Un Option!--</option></select>',
+  wilaya: '<label for="">wilaya</label><select id="wilaya_select" class="clientData" name ="wilaya_select"  onchange="htmlCommunesGenerator(this.value)"><option value="select">--Choisez Un Option!--</option></select>',
   multi_commune: `
+    <label for="">communes</label>
       <div class="multiselect">
-        <div class="selectBox" onclick="showCheckboxes()">
+        <div class="selectBox" onclick="displayCommunesList()">
           <select><option id="multiselect_select" value="select">--Choisez Un Option!--</option></select>
           <div class="overSelect"></div>
         </div>
-        <div id="commune" class="checkboxes" onclick="countMultiSelect()"></div>
+        <div id="commune" class="communesListContainer" onclick="countSelectedCommunes()"></div>
       </div>
     `,
-  étages: '<label for="">étages</label><input id="Superficie" type="text" placeholder="ex: 3"/>',
+  étages: '<label for="">étages</label><input id="étages" class="clientData" type="text" placeholder="ex: 3"/>',
   
-  chambers: '<label for="">chambers</label><input id="min_chambers" type="text" placeholder="3"/>',
+  chambers: '<label for="">chambers</label><input id="chambers" class="clientData" type="text" placeholder="3"/>',
   
-  min_chambers: '<label for="">min_chambers</label><input id="min_chambers" type="text" placeholder="3"/>',
-  max_chambers: '<label for="">max_chambers</label><input id="max_chambers" type="text" placeholder="5"/>',
+  min_chambers: '<label for="">min_chambers</label><input id="min_chambers" class="clientData" type="text" placeholder="3"/>',
+  max_chambers: '<label for="">max_chambers</label><input id="max_chambers" class="clientData" type="text" placeholder="5"/>',
   
-  prix: '<label for="">prix</label><input id="min_prix" type="text" placeholder="15212"/>',
+  prix: '<label for="">prix</label><input id="prix" class="clientData" type="text" placeholder="15212"/>',
   
-  min_prix: '<label for="">min_prix</label><input id="min_prix" type="text" placeholder="15212"/>',
-  max_prix: '<label for="">max_prix</label><input id="max_prix" type="text" placeholder="23000"/>',
+  min_prix: '<label for="">min_prix</label><input id="min_prix" class="clientData" type="text" placeholder="15212"/>',
+  max_prix: '<label for="">max_prix</label><input id="max_prix" class="clientData" type="text" placeholder="23000"/>',
   
-  facade: '<label for="">facade</label><input id="facade" type="text" placeholder="3"/>',
+  facade: '<label for="">facade</label><input id="facade" class="clientData" type="text" placeholder="3"/>',
   
-  Superficie: '<label for="">Superficie</label><input id="Superficie" type="text" placeholder="100m²"/>',
+  Superficie: '<label for="">Superficie</label><input id="Superficie" class="clientData" type="text" placeholder="100m²"/>',
   
-  Spécifications: '<label for="">Spécifications</label><input id="Spécifications" type="text" placeholder="ex: Jardin , Electricité , Gaz , Eau , Garage , Acte notarié , Livret foncier"/>'
+  Spécifications: '<label for="">Spécifications</label><input id="Spécifications" class="clientData" type="text" placeholder="ex: Jardin , Electricité , Gaz , Eau , Garage , Acte notarié , Livret foncier"/>'
 }
-
-
-
-
 
 
 let action_spec={
@@ -128,7 +126,7 @@ let action_spec={
 
   types:{
     // acheter, vender, client_louer, louer_vacance, vendeur_louer, échange
-    Appartement: [[ 3, 4, 7], [ 3, 4], [ 3, 4, 7], [ 3, 4, 7], [ 3, 4, 7], [ 3, 4, 7]],
+    Appartement: [[2,  3, 6], [ 3, 4], [ 3, 4, 7], [ 3, 4, 7], [ 3, 4, 7], [ 3, 4, 7]],
     Bungalow: [[ 4, 7], [ 4, 7], [ 4, 7], [ 4, 7], [ 4, 7], [ 4, 7]],
     Carcasse: [[ 4, 7], [ 4, 7], [ 4, 7], [ 4, 7], [ 4, 7], [-1]],
     Duplex: [[ 4, 7], [ 4, 7], [ 4, 7], [ 4, 7], [ 4, 7], [ 4, 7]],
@@ -197,42 +195,57 @@ function htmlWilayaGenerator(){
 	let generateSelectOptionsHtml = wilaya_arr.map((wilaya, code)=>{
 		return `<option value="${code+1}">-${code+1}-${wilaya}</option>`
 	})
+  // Render HTML
 	wilaya.innerHTML += generateSelectOptionsHtml;
 }
 
-// wilaya.addEventListener('click', function(){
-	
-// 	htmlCommunesGenerator();
-// })
 
 function htmlCommunesGenerator(selected_wilaya){
   let commune = document.getElementById('commune');
   if(selected_wilaya == 'select') return commune.innerHTML = '<option value="select">--Choisez Un Option!--</option>';
 	let commune_arr = communes[selected_wilaya].split("|");
-	let generateSelectOptionsHtml = commune_arr.map((state)=>{
-    return `<label for="${state}"><input type="checkbox" id="${state}" value="${state}" />${state} </label>`;
+	let generateSelectOptionsHtml = '';
+  commune_arr.map((state)=>{
+    generateSelectOptionsHtml+= `<label for="${state}"><input type="checkbox" id="${state}" value="${state}" />${state} </label>`;
 	})
 	commune.innerHTML = '';
+  // Render HTML
 	commune.innerHTML = '<option value="select">--Choisez Un Option!--</option>' + generateSelectOptionsHtml;
 }
 
 
-
-function showCheckboxes() {
-  var expanded = document.getElementsByClassName("checkboxes")[0].style.display;
-  (expanded == "none") ? showMultiSelect() : hideMultiSelect()
+function displayCommunesList() {
+  var expanded = document.getElementsByClassName("communesListContainer")[0].style.display;
+  (expanded == "none") ? showCommunesList() : hideCommunesList()
 }
-function showMultiSelect(){
-  document.getElementsByClassName("checkboxes")[0].style.display = "block";
+function showCommunesList(){
+  document.getElementsByClassName("communesListContainer")[0].style.display = "block";
 }
-function hideMultiSelect(){
-  document.getElementsByClassName("checkboxes")[0].style.display = "none";
+function hideCommunesList(){
+  document.getElementsByClassName("communesListContainer")[0].style.display = "none";
 }
-// window.addEventListener('click', function(){
-//   (!document.getElementsByClassName("multiselect")[0].contains(event.target)) && hideMultiSelect();
-// })
-function countMultiSelect(){
-  let checkedInputs = document.getElementById('checkboxes').querySelectorAll('input:checked');
+function countSelectedCommunes(){
+  let checkedInputs = document.getElementsByClassName('communesListContainer')[0].querySelectorAll('input:checked');
   let multiSelectOption = document.getElementById('multiselect_select');
   multiSelectOption.innerText = (checkedInputs.length) ? checkedInputs.length + ' Commune/s' : '--Choisez Un Option!--';
 }
+//Close commune list when click somewhere else
+document.body.addEventListener('click', function(){
+  if(document.getElementsByClassName("multiselect").length === 0) return
+  (!document.getElementsByClassName("multiselect")[0].contains(event.target)) && hideCommunesList();
+})
+
+//Extract Client DATA
+saveBtn.addEventListener('click', function(){
+  let clientDataJson = {}
+  Array.from(container.querySelectorAll('.clientData')).map(item=>{
+    clientDataJson[item.id] = item.value
+  })
+  clientDataJson.communes = []
+  Array.from(document.getElementsByClassName("communesListContainer")[0].querySelectorAll('input:checked')).map(item=>{
+    clientDataJson.communes.push(item.value)
+  })
+  
+
+  console.log(clientDataJson)
+})
